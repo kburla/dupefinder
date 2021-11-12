@@ -1,7 +1,12 @@
 import hashlib
 import os
+import argparse
 
-src_folder = "md5test"
+parser = argparse.ArgumentParser(description="Get MD5 hash of files in folder")
+parser.add_argument("folder", type=str, help="enter folder name to check")
+args = parser.parse_args()
+if args.folder:
+    src_folder = args.folder
 
 
 def generate_md5(filename, chunk_size=4096):
