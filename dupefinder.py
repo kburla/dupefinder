@@ -18,18 +18,37 @@ def generate_md5(filename, chunk_size=4096):
 
     return hash.hexdigest()
 
+
 if __name__ == "__main__":
 
     files_dict = dict()
 
     for path, dirs, files in os.walk(src_folder):
+        print("Generating checksums...")
         for file_name in files:
-            # print("Generating checksum for {}".format(file_name))
             files_dict[file_name] = generate_md5(os.path.join(src_folder, file_name))
 
-    print(files_dict)
+    # show duplicates
+    dupeset = {}
+
+    # create a set of dupes
+    for key, value in files_dict.items():
+        if value not in dupeset:
+            dupeset[value] = [key]
+        else:
+            dupeset[value].append(key)
+
+    # show only the dupes
+    print ("The following files are duplicates:")
+    for key, value in dupeset.items():
+        count = 0
+        if len(dupeset[key]) > 1:
+            print(key)
+            for item in dupeset[key]:
+                count = count + 1
+                print("{} : {}".format(count, item))
 
     # with open(os.path.join(src_folder, "checksum.txt"), "w") as f:
-    #     for key, value in md5_dict.items():
+    #     for key, value in files_dict.items():
     #         f.write("{} : {}\n".format(value, key))
     #         print("{} : {}".format(value, key))
