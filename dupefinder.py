@@ -37,21 +37,17 @@ if __name__ == "__main__":
 
     # arguments
     parser = argparse.ArgumentParser(description="Get MD5 hash of files in folder")
-    parser.add_argument("folder", type=str, help="enter folder name to check")
+    parser.add_argument("directory", type=str, help="enter folder name to check")
     parser.add_argument("-v", "--verbose", help="Show MD5 information", action="store_true")
+    parser.add_argument("-o", "--output", help="Write output to file", nargs="?", default=None, const="output.txt") 
     args = parser.parse_args()
-    if args.folder:
-        src_folder = args.folder
+    src_folder = args.directory
+    output = args.output
 
     files_dict = dict()
 
     # open file to write
-    t = open("output_test.txt", "w")
-    t.write("It's writing now\n")
-    t.write("some more stuff\n")
-    t.close()
-
-    f = open("output.txt", "w")
+    f = open(output, "w")
 
 
     print("Generating checksums...")
