@@ -1,6 +1,7 @@
 import hashlib
 import os
 import argparse
+import sys
 
 # generate md5 hashes
 def generate_md5(filename, chunk_size=4096):
@@ -44,6 +45,15 @@ if __name__ == "__main__":
 
     files_dict = dict()
 
+    # open file to write
+    t = open("output_test.txt", "w")
+    t.write("It's writing now\n")
+    t.write("some more stuff\n")
+    t.close()
+
+    f = open("output.txt", "w")
+
+
     print("Generating checksums...")
     filelist = get_filelist(src_folder, True if args.verbose else False)
     dupeset = create_dupeset(files_dict)
@@ -54,6 +64,10 @@ if __name__ == "__main__":
         count = 0
         if len(dupeset[key]) > 1:
             print(key)
+            f.write(key + "\n")
             for item in dupeset[key]:
                 count = count + 1
                 print("{} : {}".format(count, item))
+                f.write("{} : {}\n".format(count, item))
+    f.write("\n")
+    f.close()
