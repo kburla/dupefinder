@@ -47,7 +47,7 @@ if __name__ == "__main__":
     files_dict = dict()
 
     # open file to write
-    f = open(output, "w")
+    if output: f = open(output, "w")
 
 
     print("Generating checksums...")
@@ -60,10 +60,10 @@ if __name__ == "__main__":
         count = 0
         if len(dupeset[key]) > 1:
             print(key)
-            f.write(key + "\n")
+            if output: f.write(key + "\n")
             for item in dupeset[key]:
                 count = count + 1
-                print("{} : {}".format(count, item))
-                f.write("{} : {}\n".format(count, item))
-    f.write("\n")
-    f.close()
+                print("{}: {}".format(count, item))
+                if output: f.write("{}: {}\n".format(count, item))
+    if output: f.write("\n")
+    if output: f.close()
